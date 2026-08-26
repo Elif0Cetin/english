@@ -12,7 +12,7 @@ const SPEAKING_SESSIONS_STORAGE_KEY = "linguastep_speaking_sessions_v3";
 
 // Master Teacher Secret Config
 export const MASTER_TEACHER_USERNAME = "teacher_elif";
-export const MASTER_TEACHER_PASSWORD = "Teacher2026!";
+export const MASTER_TEACHER_PASSWORD = "126796";
 export const MASTER_TEACHER_PASSKEY = "TEACHER-ELIF-2026";
 
 // Default Initial Teacher Profile
@@ -109,7 +109,7 @@ function initStorageDatabase() {
     const accounts: Record<string, { username: string; password: string; role: "student" | "teacher"; profileId: string }> = rawAccounts ? JSON.parse(rawAccounts) : {};
     const profiles: Record<string, UserProfile> = rawProfiles ? JSON.parse(rawProfiles) : {};
 
-    // Seed master teacher if not exists
+    // Seed master teacher if not exists or sync password
     if (!accounts[MASTER_TEACHER_USERNAME.toLowerCase()]) {
       accounts[MASTER_TEACHER_USERNAME.toLowerCase()] = {
         username: MASTER_TEACHER_USERNAME,
@@ -118,6 +118,9 @@ function initStorageDatabase() {
         profileId: DEFAULT_TEACHER_PROFILE.id
       };
       profiles[DEFAULT_TEACHER_PROFILE.id] = DEFAULT_TEACHER_PROFILE;
+    } else {
+      accounts[MASTER_TEACHER_USERNAME.toLowerCase()].password = MASTER_TEACHER_PASSWORD;
+      accounts[MASTER_TEACHER_USERNAME.toLowerCase()].role = "teacher";
     }
 
     // Seed student sample if empty
@@ -155,8 +158,9 @@ export function loadUserProfile(): UserProfile {
 
     let current = activeUserId && profiles[activeUserId] ? profiles[activeUserId] : null;
 
-    if (!current) {
-      // Default to the first student profile or default student
+    // Do not log into teacher account right away on fresh start / initial load
+    if (!current || current.role === "teacher") {
+      // Default to the student profile
       current = profiles[DEFAULT_STUDENT_PROFILE.id] || DEFAULT_STUDENT_PROFILE;
       localStorage.setItem(ACTIVE_USER_ID_KEY, current.id);
     }
@@ -209,6 +213,22 @@ export function saveUserProfile(profile: UserProfile): void {
     });
   } catch (e) {
     console.error("Failed to save user profile:", e);
+  }
+}
+
+/**
+ * Logout current active user and return default student profile
+ */
+export function logoutUser(): UserProfile {
+  initStorageDatabase();
+  try {
+    const rawProfiles = localStorage.getItem(PROFILES_STORAGE_KEY);
+    const profiles: Record<string, UserProfile> = rawProfiles ? JSON.parse(rawProfiles) : {};
+    const student = profiles[DEFAULT_STUDENT_PROFILE.id] || DEFAULT_STUDENT_PROFILE;
+    localStorage.setItem(ACTIVE_USER_ID_KEY, student.id);
+    return student;
+  } catch {
+    return DEFAULT_STUDENT_PROFILE;
   }
 }
 

@@ -72,7 +72,7 @@ export const SpeakingSessionReviewModal: React.FC<SpeakingSessionReviewModalProp
                 </span>
               </div>
               <p className="text-xs text-indigo-200 mt-0.5">
-                Scenario: <strong>{session.scenario}</strong> • Topic: {session.topic}
+                Scenario: <strong>{session.scenario || session.roomTitle}</strong> • Topic: {session.topic || session.roomTopic}
               </p>
             </div>
           </div>
@@ -98,7 +98,7 @@ export const SpeakingSessionReviewModal: React.FC<SpeakingSessionReviewModalProp
                 </span>
                 <span className="flex items-center space-x-1 text-[11px]">
                   <Calendar className="w-3.5 h-3.5 text-slate-400" />
-                  <span>{session.timestamp}</span>
+                  <span>{session.updatedAt || session.startedAt}</span>
                 </span>
               </div>
               <div className="flex items-center justify-between text-[11px] text-slate-600 pt-1 border-t border-slate-100">
@@ -108,14 +108,14 @@ export const SpeakingSessionReviewModal: React.FC<SpeakingSessionReviewModalProp
             </div>
 
             {/* AI Real-Time Critique Highlight */}
-            {session.aiCritique && (
+            {session.aiCritiqueSummary && (
               <div className="bg-purple-50/80 border border-purple-200 p-3.5 rounded-2xl text-xs space-y-1 text-purple-950">
                 <div className="flex items-center space-x-1.5 font-bold text-purple-900">
                   <Sparkles className="w-4 h-4 text-purple-600" />
                   <span>AI Real-Time Speaking Analysis</span>
                 </div>
                 <p className="text-[11px] text-purple-800 leading-relaxed italic">
-                  "{session.aiCritique}"
+                  "{session.aiCritiqueSummary}"
                 </p>
               </div>
             )}

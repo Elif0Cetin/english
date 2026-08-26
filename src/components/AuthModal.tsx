@@ -3,10 +3,7 @@ import { UserProfile } from "../types";
 import {
   registerStudent,
   loginWithUsername,
-  registerTeacherWithPasskey,
-  MASTER_TEACHER_USERNAME,
-  MASTER_TEACHER_PASSWORD,
-  MASTER_TEACHER_PASSKEY
+  registerTeacherWithPasskey
 } from "../utils/storage";
 import {
   X,
@@ -40,9 +37,9 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLoginSuccess })
 
   // Teacher Portal Form state
   const [teacherMode, setTeacherMode] = useState<"login" | "create">("login");
-  const [teacherUsername, setTeacherUsername] = useState(MASTER_TEACHER_USERNAME);
-  const [teacherPassword, setTeacherPassword] = useState(MASTER_TEACHER_PASSWORD);
-  const [teacherName, setTeacherName] = useState("Teacher Elif");
+  const [teacherUsername, setTeacherUsername] = useState("");
+  const [teacherPassword, setTeacherPassword] = useState("");
+  const [teacherName, setTeacherName] = useState("");
   const [teacherPasskey, setTeacherPasskey] = useState("");
 
   // Feedback states
@@ -349,8 +346,8 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLoginSuccess })
                       required
                       value={teacherUsername}
                       onChange={(e) => setTeacherUsername(e.target.value)}
-                      placeholder={MASTER_TEACHER_USERNAME}
-                      className="w-full border border-slate-200 rounded-xl pl-9 pr-3.5 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden font-mono"
+                      placeholder="e.g. teacher_elif"
+                      className="w-full border border-slate-200 rounded-xl pl-9 pr-3.5 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden"
                     />
                   </div>
                 </div>
@@ -365,7 +362,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLoginSuccess })
                       value={teacherPassword}
                       onChange={(e) => setTeacherPassword(e.target.value)}
                       placeholder="••••••••"
-                      className="w-full border border-slate-200 rounded-xl pl-9 pr-3.5 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden font-mono"
+                      className="w-full border border-slate-200 rounded-xl pl-9 pr-3.5 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden"
                     />
                   </div>
                 </div>
@@ -377,7 +374,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLoginSuccess })
                   Sign In to Teacher Dashboard
                 </button>
 
-                <div className="pt-2 flex items-center justify-between text-slate-500">
+                <div className="pt-2 text-center">
                   <button
                     type="button"
                     onClick={() => {
@@ -388,9 +385,6 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLoginSuccess })
                   >
                     Authorize New Teacher Key
                   </button>
-                  <span className="text-[10px] bg-slate-100 px-2 py-0.5 rounded font-mono">
-                    User: {MASTER_TEACHER_USERNAME}
-                  </span>
                 </div>
               </>
             ) : (
@@ -405,13 +399,10 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLoginSuccess })
                       required
                       value={teacherPasskey}
                       onChange={(e) => setTeacherPasskey(e.target.value)}
-                      placeholder={MASTER_TEACHER_PASSKEY}
-                      className="w-full border border-slate-200 rounded-xl pl-9 pr-3.5 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden font-mono"
+                      placeholder="Enter Master Passkey"
+                      className="w-full border border-slate-200 rounded-xl pl-9 pr-3.5 py-2.5 focus:ring-2 focus:ring-indigo-500 focus:outline-hidden"
                     />
                   </div>
-                  <span className="text-[10px] text-slate-400 mt-1 block">
-                    Passkey: <code>{MASTER_TEACHER_PASSKEY}</code>
-                  </span>
                 </div>
 
                 <div>
@@ -421,7 +412,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLoginSuccess })
                     required
                     value={teacherName}
                     onChange={(e) => setTeacherName(e.target.value)}
-                    placeholder="Teacher Elif"
+                    placeholder="e.g. Teacher Elif"
                     className="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 focus:outline-hidden"
                   />
                 </div>
@@ -434,7 +425,7 @@ export const AuthModal: React.FC<AuthModalProps> = ({ onClose, onLoginSuccess })
                       required
                       value={teacherUsername}
                       onChange={(e) => setTeacherUsername(e.target.value)}
-                      placeholder="teacher_elif"
+                      placeholder="e.g. teacher_elif"
                       className="w-full border border-slate-200 rounded-xl px-3.5 py-2.5 focus:outline-hidden"
                     />
                   </div>

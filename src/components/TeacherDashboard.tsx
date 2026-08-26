@@ -7,9 +7,7 @@ import {
   deleteTeacherAssignment,
   getAssignmentSubmissions,
   getSpeakingSessions,
-  deleteSpeakingSession,
-  MASTER_TEACHER_USERNAME,
-  MASTER_TEACHER_PASSKEY
+  deleteSpeakingSession
 } from "../utils/storage";
 import {
   fetchAllStudentsFromSupabase,
@@ -242,16 +240,18 @@ export const TeacherDashboard: React.FC<TeacherDashboardProps> = ({
           </div>
         </div>
 
-        {/* Quick Instructor Credentials Info Box */}
+        {/* Quick Instructor Account Info */}
         <div className="mt-6 pt-4 border-t border-white/10 flex flex-wrap items-center justify-between gap-4 text-[11px] text-indigo-200">
-          <div className="flex items-center space-x-4">
+          <div className="flex items-center space-x-3">
             <span className="flex items-center space-x-1.5 font-mono bg-black/30 px-2.5 py-1 rounded-lg">
               <Key className="w-3.5 h-3.5 text-amber-400" />
-              <span>Teacher Username: <strong>{teacher.username || MASTER_TEACHER_USERNAME}</strong></span>
+              <span>Signed In As: <strong>@{teacher.username}</strong></span>
             </span>
-            <span className="hidden sm:inline bg-indigo-500/20 px-2.5 py-1 rounded-lg">
-              Master Passkey: <code className="font-mono text-amber-300 font-bold">{MASTER_TEACHER_PASSKEY}</code>
-            </span>
+            {teacher.email && (
+              <span className="hidden sm:inline bg-indigo-500/20 px-2.5 py-1 rounded-lg">
+                {teacher.email}
+              </span>
+            )}
           </div>
           <span className="text-emerald-300 font-medium">
             🔒 Student access strictly restricted to Student Accounts
