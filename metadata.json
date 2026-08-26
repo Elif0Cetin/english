@@ -1,0 +1,6 @@
+{
+  "name": "LinguaStep - English Mastery Platform",
+  "description": "Interactive English learning platform for B1 learners with A1-B1 structured progression, unlockable Advanced modules, AI pronunciation correction, peer speaking practice, gamified streaks, and performance analytics.",
+  "requestFramePermissions": ["microphone"],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
